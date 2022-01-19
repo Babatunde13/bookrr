@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import envs from '../envs.js'
+import envs from '../envs'
 
 mongoose.connect(envs.dbUrl)
 
