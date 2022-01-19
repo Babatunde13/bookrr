@@ -1,6 +1,6 @@
-import apiSchema from './schema.js'
-import query from './query.js'
-import mutation from './mutation.js'
+import apiSchema from './schema'
+import query from './query'
+import mutation from './mutation'
 
 export const resolver = {
     ...query, ...mutation,
