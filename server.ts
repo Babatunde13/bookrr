@@ -4,14 +4,14 @@ import os from 'os'
 import cluster, { Worker } from 'cluster'
 import { graphqlHTTP } from 'express-graphql'
 import { schema, resolver } from './schema'
-import envs from './envs.js'
+import envs from './envs'
 import db from './db'
 
 const forks = new Set<Worker>()
 
 const httpServer = async () => {
     let server: http.Server;
-    if (cluster.isMaster) {
+    if (cluster.isPrimary) {
         const cpuCount = os.cpus().length;
         for (let i = 0; i < cpuCount; i++) {
             const fork = cluster.fork();
@@ -43,7 +43,7 @@ const startServer = async () => {
     const app: Application = express();
     app.use(express.json());
     app.use(envs.graphqlPath, graphqlHTTP({
-        schema: schema,
+        schema,
         rootValue: resolver,
         graphiql: true,
         customFormatErrorFn: (err: any) => {
